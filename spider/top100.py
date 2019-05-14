@@ -64,8 +64,8 @@ class Top100Spider(Spider):
         item = DanmusItem()
         item['title'] = response.meta.get('title')
         danmus = []
-        # 注意：这里返回的是XmlResponse，要进行xml文件解码，如下所示
-        # scrapy的三种响应形式：TextResponse, HtmlResponse, XmlResponse 均可以用这种解码方式
+        # 注意：这里返回的是xml格式的数据，要进行数据格式转换
+        # scrapy三种响应形式：TextResponse, HtmlResponse, XmlResponse
         response = http.XmlResponse(url=response.url, body=response.body, encoding='utf-8')
         ds = re.findall(r'<d(.*?)</d>', response.text, re.S)
         for d in ds:
@@ -92,7 +92,7 @@ class Top100Spider(Spider):
                 # 将时间戳转化为时间
                 timeStamp = comment.get('ctime')
                 timeArray = time.localtime(timeStamp)
-                item['time'] = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+                item['time'] = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                 item['like'] = comment.get('like')
                 item['user_info'] = {
                     'uid': comment.get('member').get('uid'),
