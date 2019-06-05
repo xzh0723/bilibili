@@ -65,10 +65,11 @@ class BiliBili():
         fullbg = self.wait.until(EC.presence_of_element_located(
             (By.CSS_SELECTOR, "canvas.geetest_canvas_fullbg")))
         time.sleep(2)
-
+        
+        # 两种执行js写法
         if full:
             self.browser.execute_script(
-                "arguments[0].setAttribute(arguments[1], arguments[2])", fullbg, "style", "")
+                'document.getElementsByClassName("geetest_canvas_fullbg")[0].setAttribute("style", "")')
         else:
             self.browser.execute_script(
                 "arguments[0].setAttribute(arguments[1], arguments[2])", fullbg, "style", "display: none")
